@@ -1,0 +1,29 @@
+Variáveis 
+
+nome = "jan" cidade = "itopava" consumo = "6km/l" lanche = "20R$"  coca = "5R$" custo = " " 
+
+inicio
+Entrada
+leia("informe km percorido");
+leia("informe consumo de km/l");
+
+Processo
+litros = (distancia / consumo);
+
+E
+leia("preço da gasolina",preco);
+
+P
+valor= (litros * preco);
+
+E
+leia("valor lanche", lanche);
+leia("valor bebida", bebida);
+
+P
+custo = valor + lanche + bebida;
+
+Saida
+escreva("custo viagem = ", custo);
+fim
+
