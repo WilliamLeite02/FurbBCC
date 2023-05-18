@@ -698,10 +698,477 @@ public class Uni5{
 
 
 static void exe24(){
+    Scanner w = new Scanner(System.in);
+
+    
+    System.out.print("Digite o limite diário de peso de pesca (em kg): ");
+    double limiteDiario = w.nextDouble();
+    
+    double pesoTotal = 0;
+    String opcao = "s";
+    
+    while (opcao.equalsIgnoreCase("s")) {
+        System.out.print("Digite o peso do peixe em gramas: ");
+        double pesoPeixe = w.nextDouble();
+        
+        pesoTotal += pesoPeixe / 1000; 
+        if (pesoTotal > limiteDiario) {
+            System.out.println("Limite diário excedido!");
+            break;
+        }
+        
+        System.out.println("Peso total da pesca até agora: " + pesoTotal + " kg");
+        
+        System.out.print("Deseja informar o peso de mais um peixe? (s/n): ");
+        opcao = w.next();
+    }
 
 
+}
+static void exe25(){
+    Scanner w = new Scanner(System.in);
 
+    int pontosDireita = 0;
+    int pontosEsquerda = 0;
+    
+    while (true) {
+        System.out.print("Digite D para ponto para Direita ou E para ponto Esquerda. (D/E): ");
+        String codigoPonto = w.nextLine().toUpperCase();
+        
+        if (codigoPonto.equalsIgnoreCase("D")) {
+            pontosDireita++;
+        } else if (codigoPonto.equalsIgnoreCase("E")) {
+            pontosEsquerda++;
+        } else {
+            System.out.println("Código de ponto inválido. Digite D para ponto da direita ou E para ponto da esquerda.");
+            continue;
+        }
+        
+        if ((pontosDireita >= 21 || pontosEsquerda >= 21) && Math.abs(pontosDireita - pontosEsquerda) >= 2) {
+            break;
+        }
+    }
+    
+    String vencedor;
+    
+    if (pontosDireita > pontosEsquerda) {
+        vencedor = "Direita";
+    } else {
+        vencedor = "Esquerda";
+    }
+    
+    System.out.println("Vencedor: " + vencedor);
 
+    
+}
+
+static void exe26(){
+    Scanner w = new Scanner(System.in);
+
+    System.out.print("Digite o valor do pedágio ao qual se nega a pagar: ");
+    double valorNegado = w.nextDouble();
+    
+    int trechosAcimaPedagioNegado = 0;
+    int totalTrechos = 0;
+    int trechosAcima150Km = 0;
+    
+    while (true) {
+        System.out.print("Digite o custo do pedágio (-1 para encerrar): ");
+        double custoPedagio = w.nextDouble();
+        
+        if (custoPedagio < 0) {
+            break;
+        }
+        
+        System.out.print("Digite a distância do trecho (em km): ");
+        int distanciaTrecho = w.nextInt();
+        
+        if (custoPedagio > valorNegado) {
+            trechosAcimaPedagioNegado++;
+        }
+        
+        totalTrechos++;
+        
+        if (distanciaTrecho > 150 && custoPedagio <= valorNegado) {
+            trechosAcima150Km++;
+        }
+    }
+    
+    System.out.println("Trechos com valor de pedágio acima do qual  nega-se a pagar: " + trechosAcimaPedagioNegado);
+    System.out.println("Quantidade de trechos informados: " + totalTrechos);
+    System.out.println("Trechos acima de 150 km com valor de pedágio aceito: " + trechosAcima150Km);
+    
+}
+
+static void exe27(){
+    Scanner w = new Scanner(System.in);
+    DecimalFormat d = new DecimalFormat("0.00");
+    int maiorProducao = 0;
+        int diaMaiorProducao = 0;
+        int totalProducaoManha = 0;
+        int totalProducaoTarde = 0;
+        int totalProducao = 0;
+
+        while (true) {
+            System.out.println("Digite o dia do mês de abril (1 a 30): ");
+            int dia = w.nextInt();
+
+            if (dia < 1 || dia > 30) {
+                System.out.println("Dia inválido. Digite um valor válido para o mês de abril (1 a 30).");
+                continue;
+            }
+
+            System.out.print("Digite o total de peças produzidas no turno da manhã: ");
+            int producaoManha = w.nextInt();
+
+            System.out.print("Digite o total de peças produzidas no turno da tarde: ");
+            int producaoTarde = w.nextInt();
+
+            double valorDiario;
+            if (dia <= 15) {
+                if (producaoManha >= 30 && producaoTarde >= 30 && (producaoManha + producaoTarde) > 100) {
+                    valorDiario = 0.80;
+                } else {
+                    valorDiario = 0.50;
+                }
+            } else {
+                valorDiario = 0.40 + 0.30;
+            }
+
+            double salario = (producaoManha * valorDiario) + (producaoTarde * valorDiario);
+
+            System.out.println("O funcionário receberá R$" + d.format(salario) + " no dia " + dia);
+
+            if (producaoManha + producaoTarde > maiorProducao) {
+                maiorProducao = producaoManha + producaoTarde;
+                diaMaiorProducao = dia;
+            }
+
+            if (producaoManha > totalProducaoManha) {
+                totalProducaoManha = producaoManha;
+            }
+
+            if (producaoTarde > totalProducaoTarde) {
+                totalProducaoTarde = producaoTarde;
+            }
+
+            totalProducao += producaoManha + producaoTarde;
+
+            System.out.print("Novo funcionário (1. Sim / 2. Não)? ");
+            int resposta = w.nextInt();
+
+            if (resposta == 2) {
+                break;
+            }
+        }
+
+        System.out.println("Dia de maior produção: " + diaMaiorProducao);
+        System.out.println("Período de maior produção: " + (totalProducaoManha > totalProducaoTarde ? "Manhã" : "Tarde"));
+        System.out.println("Quantidade total de peças produzidas: " + totalProducao);
+
+}
+
+static void exe28(){
+    Scanner w = new Scanner(System.in);
+
+    int totalVotos = 0;
+    int votos1 = 0;
+    int votos2 = 0;
+    int votos3 = 0;
+    int votos4 = 0;
+
+    while (true) {
+        System.out.print("Mais um voto? (s - SIM / n - NÃO): ");
+        String resposta = w.next();
+
+        if (resposta.equalsIgnoreCase("n")) {
+            break;
+        }
+
+        System.out.print("Digite o código do conjunto (1 a 4): ");
+        int codigo = w.nextInt();
+
+        if (codigo < 1 || codigo > 4) {
+            System.out.println("Código inválido. Digite um valor válido (1 a 4).");
+            continue;
+        }
+
+        switch (codigo) {
+            case 1:
+                votos1++;
+                break;
+            case 2:
+                votos2++;
+                break;
+            case 3:
+                votos3++;
+                break;
+            case 4:
+                votos4++;
+                break;
+        }
+
+        totalVotos++;
+    }
+
+    double calcularPercentual1 = ( votos1 / (double) totalVotos)*100;
+    double calcularPercentual2 = ( votos2 / (double) totalVotos)*100;
+    double calcularPercentual3 = ( votos3 / (double) totalVotos)*100;
+    double calcularPercentual4 = ( votos4 / (double) totalVotos)*100;
+
+    System.out.println("Resultado da eleição:");
+    System.out.println("Conjunto: Nenhum de Nós | Votos: " + votos1 + " | Percentual: " + calcularPercentual1 + "%");
+    System.out.println("Conjunto: CPM22 | Votos: " + votos2 + " | Percentual: " + calcularPercentual2 + "%");
+    System.out.println("Conjunto: Skank | Votos: " + votos3 + " | Percentual: " + calcularPercentual3 + "%");
+    System.out.println("Conjunto: Jota Quest | Votos: " + votos4 + " | Percentual: " + calcularPercentual4 + "%");
+
+    String conjuntoVencedor = "";
+    int maiorVotos = 0;
+
+    if (votos1 > maiorVotos) {
+        conjuntoVencedor = "Nenhum de Nós";
+        maiorVotos = votos1;
+    }
+    if (votos2 > maiorVotos) {
+        conjuntoVencedor = "CPM22";
+        maiorVotos = votos2;
+    }
+    if (votos3 > maiorVotos) {
+        conjuntoVencedor = "Skank";
+        maiorVotos = votos3;
+    }
+    if (votos4 > maiorVotos) {
+        conjuntoVencedor = "Jota Quest";
+    }
+
+    System.out.println("O conjunto vencedor é: " + conjuntoVencedor);
+
+}
+
+static void exe29(){
+    Scanner w = new Scanner(System.in);
+
+    System.out.print("Digite o valor desejado: ");
+        int valor = w.nextInt();
+
+        int cedulas20 = valor / 20;
+        int resto20 = valor % 20;
+
+        int cedulas10 = resto20 / 10;
+        int resto10 = resto20 % 10;
+
+        int cedulas5 = resto10 / 5;
+        int resto5 = resto10 % 5;
+
+        int cedulas2 = resto5 / 2;
+        int cedulas1 = resto5 % 2;
+
+        System.out.println("Quantidade mínima de cédulas:");
+        System.out.println("Cédulas de 20: " + cedulas20);
+        System.out.println("Cédulas de 10: " + cedulas10);
+        System.out.println("Cédulas de 5: " + cedulas5);
+        System.out.println("Cédulas de 2: " + cedulas2);
+        System.out.println("Cédulas de 1: " + cedulas1);
+
+}
+
+static void exe30(){
+    Scanner w = new Scanner(System.in);
+
+    System.out.print("Digite o valor inicial (N): ");
+        int N = w.nextInt();
+
+        System.out.print("Digite o decremento (K): ");
+        int K = w.nextInt();
+
+        System.out.print("Digite o tamanho da mochila (M): ");
+        int M = w.nextInt();
+
+        
+        int elementoAtual = N;
+        int somaMochila = 0;
+        int somaForaMochila = 0;
+
+        System.out.println("Elementos a serem colocados na mochila:");
+        while (elementoAtual >= 0) {
+            if (elementoAtual <= M) {
+                System.out.print(elementoAtual + " ");
+                somaMochila += elementoAtual;
+            } else {
+                somaForaMochila += elementoAtual;
+            }
+            elementoAtual -= K;
+        }
+        System.out.println();
+
+        System.out.println("Soma dos elementos que entraram na mochila: " + somaMochila);
+        System.out.println("Soma dos elementos que não entraram na mochila: " + somaForaMochila);
+
+}
+
+static void exe31(){
+    Scanner w = new Scanner(System.in);
+
+    System.out.print("Digite um número inteiro positivo: ");
+        int numero = w.nextInt();
+
+        int fator = 2;
+
+        
+        System.out.println("Número: " + numero);
+        while(numero > 1 ){
+            if(numero % fator == 0){
+                System.out.println("numero "+numero+ " decomposição "+fator);
+                numero /= fator;
+                
+            }else{
+                fator++;
+            }
+        }
+        System.out.println("numero " +numero);
+    
+    
+}
+
+static void exe32(){
+    Scanner w = new Scanner(System.in);
+
+    System.out.print("Digite o dia da semana do primeiro dia (1=Domingo, 2=Segunda, ..., 7=Sábado): ");
+        int diaSemana = w.nextInt();
+        
+        System.out.print("Digite o número de dias do mês: ");
+        int numDias = w.nextInt();
+        
+        System.out.println("Calendário:\n");
+        System.out.println("Dom Seg Ter Qua Qui Sex Sab");
+        
+        for (int i = 1; i < diaSemana; i++) {
+            System.out.print("    ");
+        }
+        
+        for (int dia = 1; dia <= numDias; dia++) {
+            System.out.printf("%3d ", dia);
+            
+            if ((dia + diaSemana - 1) % 7 == 0) {
+                System.out.println();
+            }
+        }
+
+}
+
+static void exe33(){
+    Scanner w = new Scanner(System.in);
+
+    int voto;
+        int candidato1 = 0;
+        int candidato2 = 0;
+        int candidato3 = 0;
+        int candidato4 = 0;
+        int totalVotosNulos = 0;
+        int totalVotosBrancos = 0;
+        int totalVotos = 0;
+
+        do {
+            System.out.println("Digite o código do candidato (1 a 4), voto nulo (5), voto em branco (6) ou 0 para sair:");
+            voto = w.nextInt();
+
+            switch (voto) {
+                case 0:
+                    break;
+                case 1:
+                    candidato1++;
+                    totalVotos++;
+                    break;
+                case 2:
+                    candidato2++;
+                    totalVotos++;
+                    break;
+                case 3:
+                    candidato3++;
+                    totalVotos++;
+                    break;
+                case 4:
+                    candidato4++;
+                    totalVotos++;
+                    break;
+                case 5:
+                    totalVotosNulos++;
+                    totalVotos++;
+                    break;
+                case 6:
+                    totalVotosBrancos++;
+                    totalVotos++;
+                    break;
+                default:
+                    System.out.println("Opção incorreta. Tente novamente.");
+                    break;
+            }
+        } while (voto != 0);
+
+        System.out.println("Resultado da Eleição:");
+        System.out.printf("Candidato 1: %d votos%n", candidato1);
+        System.out.printf("Candidato 2: %d votos%n", candidato2);
+        System.out.printf("Candidato 3: %d votos%n", candidato3);
+        System.out.printf("Candidato 4: %d votos%n", candidato4);
+        System.out.printf("Total de votos nulos: %d%n", totalVotosNulos);
+        System.out.printf("Total de votos em branco: %d%n", totalVotosBrancos);
+
+        double percentualVotosNulos = (double) totalVotosNulos / totalVotos * 100;
+        double percentualVotosBrancos = (double) totalVotosBrancos / totalVotos * 100;
+        System.out.printf("Percentual de votos nulos sobre o total: %.2f%%%n", percentualVotosNulos);
+        System.out.printf("Percentual de votos em branco sobre o total: %.2f%%%n", percentualVotosBrancos);
+    
+
+}
+
+static void exe34(){
+    Scanner w = new Scanner(System.in);
+
+    int opcao;
+        int contasEncerradas = 0;
+
+        do {
+            System.out.println("Escolha uma opção:");
+            System.out.println("1. Encerrar conta de um hóspede");
+            System.out.println("2. Verificar número de contas encerradas");
+            System.out.println("3. Sair");
+            opcao = w.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("Informe o nome do hóspede:");
+                    w.nextLine(); 
+                    String nome = w.nextLine();
+
+                    System.out.println("Informe o número de diárias do hóspede:");
+                    int numeroDiarias = w.nextInt();
+
+                    double taxaServicos;
+                    if (numeroDiarias < 15) {
+                        taxaServicos = 7.50;
+                    } else if (numeroDiarias == 15) {
+                        taxaServicos = 6.50;
+                    } else {
+                        taxaServicos = 5.00;
+                    }
+
+                    double totalPagar = (50.00 + taxaServicos) * numeroDiarias;
+
+                    System.out.println("Conta encerrada para o hóspede " + nome);
+                    System.out.println("Total a pagar: R$ " + totalPagar);
+                    contasEncerradas++;
+                    break;
+                case 2:
+                    System.out.println("Número de contas encerradas: " + contasEncerradas);
+                    break;
+                case 3:
+                    System.out.println("Encerrando o programa...");
+                    break;
+                default:
+                    System.out.println("Opção incorreta. Tente novamente.");
+                    break;
+            }
+        } while (opcao != 3);
     
 
 }
@@ -730,8 +1197,16 @@ public static void main(String[] args){
             //exe21();
             //exe22();
             //exe23();
-            exe24();
-
-
+            //exe24();
+            //exe25();
+            //exe26();
+            //exe27();
+            //exe28();
+            //exe29();
+            //exe30();
+            //exe31();
+            //exe32();
+            //exe33();
+            exe34();
     }   
 }
